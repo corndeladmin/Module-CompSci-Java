@@ -30,7 +30,7 @@ public class Sudoku {
 
         while (!stack.isEmpty()) {
             int[][] board = stack.pop();
-            Slot slot = getEmptySlot(board);
+            Slot slot = getFirstEmptySlot(board);
 
             if (slot == null) {
                 System.out.println("Solved!");
@@ -46,30 +46,62 @@ public class Sudoku {
         }
     }
 
-    private static Slot getEmptySlot(int[][] board) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Fill Me In!");
+    private static Slot getFirstEmptySlot(int[][] board) {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                if (board[row][col] == 0) {
+                    return new Slot(row, col);
+                }
+            }
+        }
+        return null;
     }
 
-    private static boolean isValidInSlot(int guess, Slot slot, int[][] board) throws ExecutionControl.NotImplementedException {
+    private static boolean isValidInSlot(int guess, Slot slot, int[][] board) {
         return isValidInRow(slot.row, guess, board) &&
                 isValidInCol(slot.col, guess, board) &&
                 isValidInSquare(slot, guess, board);
     }
 
-    private static boolean isValidInRow(int row, int guess, int[][] board) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Fill Me In!");
+    private static boolean isValidInRow(int row, int guess, int[][] board) {
+        for (int col = 0; col < 9; col++) {
+            if (board[row][col] == guess) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    private static boolean isValidInCol(int col, int guess, int[][] board) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Fill Me In!");
+    private static boolean isValidInCol(int col, int guess, int[][] board) {
+        for (int row = 0; row < 9; row++) {
+            if (board[row][col] == guess) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    private static boolean isValidInSquare(Slot slot, int guess, int[][] board) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Fill Me In!");
+    private static boolean isValidInSquare(Slot slot, int guess, int[][] board) {
+        int squareX = slot.row / 3;
+        int squareY = slot.col / 3;
+
+        for (int row = squareX * 3; row < (squareX + 1) * 3; row++) {
+            for (int col = squareY * 3; col < (squareY + 1) * 3; col++) {
+                if (board[row][col] == guess) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
-    private static int[][] updateBoard(int guess, Slot slot, int[][] board) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("Fill Me In!");
+    private static int[][] updateBoard(int guess, Slot slot, int[][] board) {
+        int[][] newBoard = new int[9][];
+        for (int row = 0; row < 9; row++) {
+            newBoard[row] = board[row].clone();
+        }
+        newBoard[slot.row][slot.col] = guess;
+        return newBoard;
     }
 
     private static void printBoard(int[][] board)
