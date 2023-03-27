@@ -1,0 +1,19 @@
+plugins {
+    id 'application'
+}
+
+group 'com.compSci'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: "java"
+ext {
+    javaMainClass = "com.compSci.Sudoku"
+}
+
+application {
+    mainClass.set(javaMainClass)
+}
